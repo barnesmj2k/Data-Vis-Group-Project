@@ -11,6 +11,10 @@
     <script src="densityview.js"></script>
 </head>
 <body>
-    <script src="control.js"></script>
+    <script>
+        d3.csv('games.csv').then(data => {
+            new Control(data);
+        });
+    </script>
 </body>
 </html>

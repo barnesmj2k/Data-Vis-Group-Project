@@ -1,6 +1,7 @@
 
-new (class Control {
-    constructor() {
+new (class Control 
+{
+    constructor(data) {
         const fullWidth = 1000;
         const fullHeight = 600;
         const halfWidth = fullWidth / 2;
@@ -17,5 +18,6 @@ new (class Control {
         this.pieView = new PieView(this, halfWidth, topHeight);
         this.lineView = new LineView(this, halfWidth, topHeight);
         this.densityView = new DensityView(this, fullWidth, bottomHeight);
+        this.scatterView = new ScatterView(this, halfWidth, topHeight);
     }
 })();
