@@ -5,18 +5,52 @@ class ScatterView {
         const plotWidth = width - margin.left - margin.right;
         const plotHeight = height - margin.top - margin.bottom;
 
-        const svg = con.root.append('div')
-            .style('width', `${width}px`).style('height', `${height}px`)
-            .append('svg')
+        const container = con.root.append('div')
+            .style('width', `${width}px`).style('height', `${height + 40}px`);
+
+        const buttonRow = container.append('div')
+            .style('margin-bottom', '6px')
+            .style('display', 'flex')
+            .style('gap', '6px');
+
+        buttonRow.append('button')
+            .text('White Wins')
+            .style('background-color', '#d62728')
+            .style('color', 'white')
+            .style('border', 'none')
+            .style('padding', '4px 8px')
+            .style('font-size', '12px')
+            .on('click', () => filterBy('white'));
+
+        buttonRow.append('button')
+            .text('Black Wins')
+            .style('background-color', '#1f77b4')
+            .style('color', 'white')
+            .style('border', 'none')
+            .style('padding', '4px 8px')
+            .style('font-size', '12px')
+            .on('click', () => filterBy('black'));
+
+        buttonRow.append('button')
+            .text('Reset')
+            .style('background-color', '#aaaaaa')
+            .style('color', 'black')
+            .style('border', 'none')
+            .style('padding', '4px 8px')
+            .style('font-size', '12px')
+            .on('click', () => filterBy('reset'));
+
+        const svg = container.append('svg')
             .attr('width', width).attr('height', height)
             .append('g')
             .attr('transform', `translate(${margin.left},${margin.top})`);
 
         const openingStats = {};
-        data.forEach(({ opening_name, winner }) => {
+        data.forEach(({ opening_name, winner }) => 
+        {
             if (!openingStats[opening_name]) openingStats[opening_name] = { w: 0, b: 0, d: 0, t: 0 };
-            if (winner == 'white') openingStats[opening_name].w++;
-            else if (winner == 'black') openingStats[opening_name].b++;
+            if (winner === 'white') openingStats[opening_name].w++;
+            else if (winner === 'black') openingStats[opening_name].b++;
             else openingStats[opening_name].d++;
             openingStats[opening_name].t++;
         });
@@ -61,7 +95,7 @@ class ScatterView {
             .style('visibility', 'hidden');
 
         // Points
-        svg.selectAll('circle')
+        const circles = svg.selectAll('circle')
             .data(plotData).enter()
             .append('circle')
             .attr('cx', d => xScale(d.whiteWinRate))
@@ -69,19 +103,21 @@ class ScatterView {
             .attr('r', 4)
             .attr('fill', d => colorScale(d.diff))
             .attr('opacity', 0.8)
-            .on('mouseover', (event, d) => 
-            {
+            .on('mouseover', (event, d) => {
                 const opening = d.opening.length > 30 ? d.opening.slice(0, 27) + '…' : d.opening;
-                tooltip.text(`${opening} — W: ${(d.whiteWinRate * 100).toFixed(1)}%, B: ${(d.blackWinRate * 100).toFixed(1)}%`)
+                tooltip.text(`${opening} — W: ${(d.whiteWinRate * 100)
+                    .toFixed(1)}%, B: ${(d.blackWinRate * 100)
+                    .toFixed(1)}%`)
                     .style('visibility', 'visible');
             })
             .on('mouseout', () => tooltip.style('visibility', 'hidden'));
-
+        
         // Legend
         const legend = svg.append('g')
-            .attr('transform', `translate(${plotWidth - 150}, 10)`);
+            .attr('transform', `translate(${plotWidth - 150}, 20)`);
 
-        const legendData = [
+        const legendData = 
+        [
             { label: 'White Dominant', color: '#d62728' },
             { label: 'Draw/Balanced', color: '#aaaaaa' },
             { label: 'Black Dominant', color: '#1f77b4' }
@@ -101,6 +137,18 @@ class ScatterView {
             .text(d => d.label)
             .style('font-size', '12px')
             .attr('fill', 'black');
+
+        // Filter function
+        function filterBy(mode) 
+        {
+            circles.attr('opacity', d => 
+            {
+                if (mode === 'white') return d.whiteWinRate > d.blackWinRate ? 0.9 : 0.1;
+                if (mode === 'black') return d.blackWinRate > d.whiteWinRate ? 0.9 : 0.1;
+                return 0.8;
+            });
+        }
     }
 }
+
 
