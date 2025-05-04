@@ -1,21 +1,19 @@
-
-new (class Control {
-    constructor() {
-        const fullWidth = 1000;
-        const fullHeight = 600;
-        const halfWidth = fullWidth / 2;
-        const topHeight = fullHeight / 3;
-        const bottomHeight = fullHeight * 2 / 3;
+class Control {
+    constructor(data) {
+        const width = 1000;
+        const height = 1000;
 
         this.root = d3.select('body').append('div')
             .attr('id', 'root')
-            .style('width', `${fullWidth}px`)
-            .style('height', `${fullHeight}px`);
+            .style('width', `${width}px`)
+            .style('height', `${height}px`);
 
         this.color = d3.scaleOrdinal(d3.schemeCategory10);
 
-        this.pieView = new PieView(this, halfWidth, topHeight);
-        this.lineView = new LineView(this, halfWidth, topHeight);
-        this.densityView = new DensityView(this, fullWidth, bottomHeight);
+        this.pieView = new PieView(data, this, width / 2, height / 2);
+        this.lineView = new LineView(data, this, width / 2, height / 2);
+        this.densityView = new DensityView(data, this, width, height);
+        this.scatterView = new ScatterView(data, this, width / 2, height / 2);
     }
-})();
+}
+
