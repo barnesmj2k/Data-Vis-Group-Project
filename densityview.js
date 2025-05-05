@@ -33,8 +33,7 @@ class DensityView {
             .call(d3.axisBottom(x));
         var y = d3.scaleLinear()
             //Should probably define this based on the actual data but this works for now
-            //Also it's backwards rn
-            .domain([0, 10])
+            .domain([10, 0])
             .range([0, this.size.height])
         svg.append("g")
             .call(d3.axisLeft(y));
@@ -42,5 +41,16 @@ class DensityView {
         const histogram = d3.histogram().domain(x.domain()).thresholds(x.ticks(40));
         const bins = histogram(data);
         console.log(bins);
+
+        svg.append("path")
+            .datum(bins)
+            .attr("fill", "#69b3a2")
+            .attr("stroke", "#333")
+            .attr("stroke-width", 1)
+            .attr("opacity", 0.6)
+            .attr("d", d3.line()
+                .curve(d3.curveBasis)
+                .x(d => x((d.x0 + d.x1) / 2))
+                .y(d => y(d.length)));
     }
 }
