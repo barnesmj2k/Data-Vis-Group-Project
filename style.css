@@ -1,0 +1,69 @@
+/* General Reset and Base Styling */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+#root {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    width: 1000px;
+    height: 1000px;
+    box-sizing: border-box;
+}
+
+/* Individual View Containers */
+#root > div {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Buttons */
+button {
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    filter: brightness(0.95);
+}
+
+/* Pie Chart Labels */
+text {
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 12px;
+}
+
+/* Scatterplot Tooltip */
+.tooltip {
+    pointer-events: none;
+    font-weight: bold;
+}
+
+/* Scatterplot Legend Text */
+g > text {
+    dominant-baseline: middle;
+}
+
+/* Responsive Axis Labels */
+.axis-label {
+    font-size: 14px;
+    fill: #444;
+    font-weight: 500;
+}
+
+/* Optional: Make SVGs fill their divs */
+svg {
+    width: 100%;
+    height: 100%;
+}
