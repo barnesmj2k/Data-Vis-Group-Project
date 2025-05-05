@@ -35,7 +35,8 @@ class DensityView {
             .append('g')
             .attr('transform', `translate(${this.size.margin},${this.size.margin})`);
 
-        data.forEach(d => {
+        data.forEach(d => 
+        {
             d.avg_rating = (parseInt(d.white_rating) + parseInt(d.black_rating)) / 2;
         });
 
