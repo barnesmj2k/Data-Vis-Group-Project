@@ -12,7 +12,7 @@ class Control {
 
         this.pieView = new PieView(data, this, width / 2, height / 2);
         this.lineView = new LineView(data, this, width / 2, height / 2);
-        this.densityView = new DensityView(data, this, width, height);
+        this.densityView = new DensityView(data, this, width, height / 2);
         this.scatterView = new ScatterView(data, this, width / 2, height / 2);
     }
 }

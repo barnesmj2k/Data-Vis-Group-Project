@@ -73,12 +73,12 @@ class DensityView {
 
         outcomes.forEach((label, i) => {
             legend.append('rect')
-                .attr('x', 0).attr('y', i * 20)
+                .attr('x', 0).attr('y', i * 20 + 20)
                 .attr('width', 12).attr('height', 12)
                 .attr('fill', color(label));
 
             legend.append('text')
-                .attr('x', 18).attr('y', i * 20 + 10)
+                .attr('x', 18).attr('y', i * 20 + 30)
                 .text(label)
                 .attr('font-size', '12px')
                 .attr('alignment-baseline', 'middle');
@@ -116,6 +116,14 @@ class DensityView {
                     .attr("stroke-width", 1.5)
                     .attr("d", area);
             });
+
+            legend.selectAll('.range').remove();
+            legend.append('text')
+                .attr('class', 'range')
+                .attr('x', 0).attr('y', 10)
+                .text(`Minimum rating: ${minRating}`)
+                .attr('font-size', '12px')
+                .attr('alignment-baseline', 'middle');
         };
 
         redraw(0);
