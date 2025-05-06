@@ -32,7 +32,7 @@ class DensityView {
             .attr('value', 0)
             .style('width', '300px')
             .on('input', function () {
-                this.minRange = this.value;
+                dv.minRange = this.value;
                 dv.redraw(+this.value, dv.winner);
             });
 
