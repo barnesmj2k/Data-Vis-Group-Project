@@ -40,6 +40,7 @@ class PieView {
             .style('display', 'flex')
             .style('flex-direction', 'column')
             .style('justify-content', 'center')
+            .style('margin-bottom', '100px')
             .style('font-size', '14px');
 
         // Initial chart
@@ -110,7 +111,7 @@ class PieView {
             .append("div")
             .style("display", "flex")
             .style("align-items", "center")
-            .style("margin-bottom", "50px")
+            .style("margin-bottom", "5px")
             .html((d, i) => `
                 <div style="width: 12px; height: 12px; background:${this.con.color(i)}; margin-right: 8px;"></div>
                 ${d.label}: ${d.value}
