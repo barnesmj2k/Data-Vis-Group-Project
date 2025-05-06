@@ -110,7 +110,7 @@ class PieView {
             .append("div")
             .style("display", "flex")
             .style("align-items", "center")
-            .style("margin-bottom", "6px")
+            .style("margin-bottom", "50px")
             .html((d, i) => `
                 <div style="width: 12px; height: 12px; background:${this.con.color(i)}; margin-right: 8px;"></div>
                 ${d.label}: ${d.value}
