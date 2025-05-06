@@ -48,7 +48,7 @@ class PieView {
         // Hook up filter change
         select.on("change", (event) => {
             const winner = event.target.value;
-            this.updateChart(winner);
+            this.con.filterWinner(winner);
         });
     }
     updateChart(winnerFilter) {

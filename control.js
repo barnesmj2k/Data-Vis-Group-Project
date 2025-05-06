@@ -15,5 +15,9 @@ class Control {
         this.densityView = new DensityView(data, this, width, height / 2);
         this.scatterView = new ScatterView(data, this, width / 2, height / 2);
     }
+    filterWinner(winner) {
+        this.pieView.updateChart(winner);
+        this.densityView.redraw(this.densityView.minRange, winner);
+    }
 }
 

@@ -7,6 +7,11 @@ class DensityView {
             width: w - 80,
             height: h - 80
         };
+        this.minRange = 0;
+        this.maxRange = 2500;
+        this.winner = "all";
+        //Used for the slider to call redraw
+        const dv = this;
 
         const container = con.root.append('div')
             .style('width', `${w}px`).style('height', `${h + 60}px`);
@@ -27,7 +32,8 @@ class DensityView {
             .attr('value', 0)
             .style('width', '300px')
             .on('input', function () {
-                redraw(+this.value);
+                this.minRange = this.value;
+                dv.redraw(+this.value, dv.winner);
             });
 
         const svg = container.append('svg')
@@ -92,8 +98,11 @@ class DensityView {
             .domain(x.domain())
             .thresholds(x.ticks(40));
 
-        const redraw = (minRating) => {
-            const filteredData = data.filter(d => d.avg_rating >= minRating);
+        this.redraw = (minRating, filter) => {
+            this.winner = filter;
+            const filteredData = data.filter(
+                d => d.avg_rating >= minRating && (filter === "all" || d.winner === filter)
+            );
 
             const binsByOutcome = {};
             outcomes.forEach(outcome => {
@@ -126,6 +135,6 @@ class DensityView {
                 .attr('alignment-baseline', 'middle');
         };
 
-        redraw(0);
+        this.redraw(0, this.winner);
     }
 }
